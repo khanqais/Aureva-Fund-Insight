@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const { body } = require('express-validator');
+const passport = require('../config/passport');
 const { register, login, getMe } = require('../controllers/authController');
 const { protect } = require('../middleware/authMiddleware');
 
-// Validation rules
+
 const registerValidation = [
   body('name').trim().notEmpty().withMessage('Name is required'),
   body('email').isEmail().withMessage('Valid email is required'),
@@ -21,5 +22,26 @@ const loginValidation = [
 router.post('/register', registerValidation, register);
 router.post('/login', loginValidation, login);
 router.get('/me', protect, getMe);
+
+// ─── Google OAuth ─────────────────────────────────────────────────
+
+// Step 1: Redirect the user to Google's consent screen
+router.get(
+  '/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+);
+
+// Step 2: Google redirects back here after the user approves
+router.get(
+  '/google/callback',
+  passport.authenticate('google', {
+    failureRedirect: `${process.env.FRONTEND_URL}/login?error=oauth_failed`,
+  }),
+  (req, res) => {
+    // Use the model method — consistent with createJWT() payload shape
+    const token = req.user.createJWT();
+    res.redirect(`${process.env.FRONTEND_URL}/auth/callback?token=${token}`);
+  }
+);
 
 module.exports = router;

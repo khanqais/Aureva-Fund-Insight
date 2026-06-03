@@ -1,36 +1,57 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
 const express = require('express');
 const cors = require('cors');
-const dotenv = require('dotenv');
+const session = require('express-session');
+const passport = require('./config/passport');
 const connectDB = require('./config/db');
-dotenv.config();
+
+
 connectDB();
+
 const app = express();
+
 app.use(cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
-    credentials: true,
+  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  credentials: true,
 }));
+
 app.use(express.json());
+
+// Session middleware — required by Passport for the OAuth flow
+// (We still use JWT for API auth; sessions are only used during the OAuth redirect)
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || process.env.JWT_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/watchlist', require('./routes/watchlistRoutes'));
 app.use('/api/funds', require('./routes/fundsRoutes'));
-app.get('/', (req, res) => {
-    res.json({ message: 'Aureva Fund Insight Tracker API is running' });
-});
 
-app.use((req, res) => {
-    res.status(404).json({ message: 'Route not found' });
+
+app.get('/', (req, res) => {
+  res.json({ message: 'API is running' });
 });
 
 app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).json({ message: 'Internal server error' });
+  console.error(err.stack);
+  res.status(500).json({ message: 'Internal server error' });
 });
 
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
 
-// Export for Vercel serverless
+
 module.exports = app;

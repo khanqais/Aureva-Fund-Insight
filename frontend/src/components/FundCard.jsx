@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import api from '../api/axios';
 import toast from 'react-hot-toast';
 
-// Displays a single fund search result with "Add to Watchlist" button
 const FundCard = ({ fund, isInWatchlist }) => {
   const navigate = useNavigate();
 
