@@ -37,8 +37,7 @@ const UserSchema = new mongoose.Schema({
     },
 }, { minimize: false, timestamps: true });
 
-// Hash password before saving (only if set and modified)
-// Mongoose 7+: async pre-hooks resolve via returned Promise — do NOT call next()
+
 UserSchema.pre('save', async function () {
     if (!this.isModified('password')) return;
     if (this.password) {
@@ -47,7 +46,7 @@ UserSchema.pre('save', async function () {
     }
 });
 
-// Generate a signed JWT for this user
+
 UserSchema.methods.createJWT = function () {
     return jwt.sign(
         { userId: this._id, name: this.name, role: this.role },
@@ -56,9 +55,8 @@ UserSchema.methods.createJWT = function () {
     );
 };
 
-// Compare a plain-text password against the stored hash
 UserSchema.methods.comparePassword = async function (pass) {
-    if (!this.password) return false; // OAuth users have no password
+    if (!this.password) return false; 
     return await bcrypt.compare(pass, this.password);
 };
 

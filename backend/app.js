@@ -21,7 +21,7 @@ app.use(cors({
 
 app.use(express.json());
 
-//Required by Passport for the OAuth flow
+
 app.use(
   session({
     secret: process.env.SESSION_SECRET || process.env.JWT_SECRET,

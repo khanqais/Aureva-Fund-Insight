@@ -23,7 +23,6 @@ const watchlistSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Prevent a user from adding the same scheme twice
 watchlistSchema.index({ userId: 1, schemeCode: 1 }, { unique: true });
 
 module.exports = mongoose.model('Watchlist', watchlistSchema);
