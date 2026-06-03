@@ -1,17 +1,12 @@
 # Aureva Fund Insight Tracker
 
-> **Live URL:** _Add your Vercel frontend URL here after deployment_
-
 A full-stack MERN application to search Indian Mutual Funds, manage a personal watchlist, and view NAV performance charts — powered by [MFapi.in](https://www.mfapi.in/).
 
 ---
 
 ## Live URLs
 
-| Service | URL |
-|---|---|
-| Frontend | `https://your-app.vercel.app` (replace after deployment) |
-| Backend API | `https://your-api.vercel.app` (replace after deployment) |
+Live URL: https://aureva-fund-insight.vercel.app
 
 ---
 
