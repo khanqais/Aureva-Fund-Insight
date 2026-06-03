@@ -45,7 +45,6 @@ const FundDetailPage = () => {
   const meta = fund?.meta;
   const navData = fund?.data || [];
 
-  // Get the latest NAV (first item — MFapi returns newest-first)
   const latestNav = navData.length > 0 ? navData[0] : null;
 
   return (
@@ -54,7 +53,6 @@ const FundDetailPage = () => {
         ← Back
       </button>
 
-      {/* Fund header */}
       <div className="fund-detail-header">
         <h1>{meta?.scheme_name || 'Fund Detail'}</h1>
         <div className="fund-meta">
@@ -70,7 +68,7 @@ const FundDetailPage = () => {
         )}
       </div>
 
-      {/* NAV Chart */}
+
       <div className="chart-section">
         <h2>NAV History</h2>
         {navData.length === 0 ? (
@@ -80,7 +78,6 @@ const FundDetailPage = () => {
         )}
       </div>
 
-      {/* Scheme info table */}
       {meta && (
         <div className="fund-info-section">
           <h2>Scheme Details</h2>

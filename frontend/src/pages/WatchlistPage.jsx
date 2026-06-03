@@ -16,7 +16,7 @@ const WatchlistPage = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  // Called by WatchlistItem when a fund is removed
+
   const handleRemoved = (schemeCode) => {
     setItems((prev) => prev.filter((item) => item.schemeCode !== schemeCode));
   };

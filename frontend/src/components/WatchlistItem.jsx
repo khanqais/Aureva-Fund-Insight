@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import api from '../api/axios';
 import toast from 'react-hot-toast';
 
-// Displays a single watchlist item with a Remove button
 const WatchlistItem = ({ item, onRemoved }) => {
   const navigate = useNavigate();
 

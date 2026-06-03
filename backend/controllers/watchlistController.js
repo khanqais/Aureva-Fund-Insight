@@ -16,8 +16,6 @@ const getWatchlist = async (req, res) => {
 
 // Route use karenge POST /api/watchlist
 const addToWatchlist = async (req, res) => {
-
-
   const { schemeCode, schemeName } = req.body;
 
   try {
@@ -28,7 +26,6 @@ const addToWatchlist = async (req, res) => {
     });
     res.status(201).json(item);
   } catch (error) {
-    // MongoDB duplicate key error code
     if (error.code === 11000) {
       return res
         .status(409)
@@ -39,9 +36,7 @@ const addToWatchlist = async (req, res) => {
   }
 };
 
-// @desc    Remove a scheme from the watchlist
-// @route   DELETE /api/watchlist/:schemeCode
-// @access  Private
+// DELETE /api/watchlist/:schemeCode
 const removeFromWatchlist = async (req, res) => {
   try {
     const deleted = await Watchlist.findOneAndDelete({

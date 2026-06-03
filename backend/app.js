@@ -19,8 +19,7 @@ app.use(cors({
 
 app.use(express.json());
 
-// Session middleware — required by Passport for the OAuth flow
-// (We still use JWT for API auth; sessions are only used during the OAuth redirect)
+//Required by Passport for the OAuth flow
 app.use(
   session({
     secret: process.env.SESSION_SECRET || process.env.JWT_SECRET,

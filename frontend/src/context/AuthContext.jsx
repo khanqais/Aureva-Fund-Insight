@@ -1,31 +1,39 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import api from '../api/axios';
 
-// Create the context
 const AuthContext = createContext(null);
 
-// Hook to use auth context
 export const useAuth = () => useContext(AuthContext);
+
+// Decode the JWT payload without verifying the signature.
+// The payload from createJWT() contains { userId, name, role }.
+const decodeToken = (token) => {
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    // Check expiry
+    if (payload.exp && payload.exp * 1000 < Date.now()) return null;
+    return payload;
+  } catch {
+    return null;
+  }
+};
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // loading until we check localStorage
+  const [loading, setLoading] = useState(true);
 
-  // On app load, check if there's a saved token and fetch the user
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      api
-        .get('/api/auth/me')
-        .then((res) => setUser(res.data))
-        .catch(() => {
-          // Token is invalid or expired — clear it
-          localStorage.removeItem('token');
-        })
-        .finally(() => setLoading(false));
-    } else {
-      setLoading(false);
+      const payload = decodeToken(token);
+      if (payload) {
+        // Restore user from token payload — no API call needed
+        setUser({ _id: payload.userId, name: payload.name, role: payload.role });
+      } else {
+        // Token is expired or invalid — clear it
+        localStorage.removeItem('token');
+      }
     }
+    setLoading(false);
   }, []);
 
   const login = (userData, token) => {

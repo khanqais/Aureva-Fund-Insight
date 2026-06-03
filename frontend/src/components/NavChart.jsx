@@ -9,13 +9,11 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-// Parses "dd-mm-yyyy" date strings from MFapi.in into JS Date objects
 const parseDate = (str) => {
   const [dd, mm, yyyy] = str.split('-');
   return new Date(`${yyyy}-${mm}-${dd}`);
 };
 
-// Range options and how far back to look in years (null = show all)
 const RANGES = [
   { label: '1Y', years: 1 },
   { label: '3Y', years: 3 },
@@ -26,9 +24,7 @@ const RANGES = [
 const NavChart = ({ data }) => {
   const [range, setRange] = useState('5Y');
 
-  // Filter and sort the NAV data based on selected range
   const chartData = useMemo(() => {
-    // MFapi returns newest-first — sort oldest-first for the chart
     const sorted = [...data]
       .map((entry) => ({
         date: parseDate(entry.date),
@@ -45,7 +41,6 @@ const NavChart = ({ data }) => {
     return sorted.filter((entry) => entry.date >= cutoff);
   }, [data, range]);
 
-  // Format date for tooltip and X-axis
   const formatDate = (date) => {
     if (!date) return '';
     return date.toLocaleDateString('en-IN', { month: 'short', year: '2-digit' });
@@ -57,7 +52,6 @@ const NavChart = ({ data }) => {
 
   return (
     <div className="chart-wrapper">
-      {/* Range toggle buttons */}
       <div className="chart-ranges">
         {RANGES.map((r) => (
           <button

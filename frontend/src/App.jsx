@@ -32,7 +32,6 @@ function App() {
             <Route path="/fund/:schemeCode" element={<FundDetailPage />} />
           </Routes>
         </main>
-        {/* Toast notifications */}
         <Toaster position="bottom-right" />
       </BrowserRouter>
     </AuthProvider>

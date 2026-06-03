@@ -4,8 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import api from '../api/axios';
 import LoadingSpinner from '../components/LoadingSpinner';
 
-// This page handles the redirect from the backend after Google OAuth.
-// The backend sends the user here with ?token=<jwt> in the URL.
+
 const AuthCallback = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -20,10 +19,8 @@ const AuthCallback = () => {
       return;
     }
 
-    // Store the token so the axios interceptor picks it up
     localStorage.setItem('token', token);
 
-    // Fetch the user profile using the new token
     api
       .get('/api/auth/me')
       .then((res) => {

@@ -16,17 +16,15 @@ const HomePage = () => {
 
   const debouncedQuery = useDebounce(query, 500);
 
-  // Fetch user's watchlist so we can mark already-added funds
   useEffect(() => {
     if (user) {
       api
         .get('/api/watchlist')
         .then((res) => setWatchlist(res.data.map((item) => item.schemeCode)))
-        .catch(() => {});
+        .catch(() => { });
     }
   }, [user]);
 
-  // Search whenever the debounced query changes
   useEffect(() => {
     if (debouncedQuery.trim().length < 2) {
       setResults([]);
@@ -64,7 +62,6 @@ const HomePage = () => {
         />
       </div>
 
-      {/* Results area */}
       <div className="results-area">
         {loading && <LoadingSpinner message="Searching funds..." />}
 

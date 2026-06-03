@@ -1,14 +1,10 @@
 const axios = require('axios');
 const NodeCache = require('node-cache');
 
-// Cache NAV responses for 1 hour (3600 seconds)
 const navCache = new NodeCache({ stdTTL: 3600 });
-
 const MFAPI_BASE = 'https://api.mfapi.in';
 
-// @desc    Search mutual funds by name/code
-// @route   GET /api/funds/search?q=<query>
-// @access  Public
+//Route Used:  GET /api/funds/search?q=<query> 
 const searchFunds = async (req, res) => {
   const { q } = req.query;
 
@@ -27,9 +23,7 @@ const searchFunds = async (req, res) => {
   }
 };
 
-// @desc    Get historical NAV data for a scheme (proxied + cached)
-// @route   GET /api/funds/:schemeCode
-// @access  Public
+// Route use karenge GET /api/funds/:schemeCode
 const getFundDetail = async (req, res) => {
   const { schemeCode } = req.params;
 
@@ -37,7 +31,7 @@ const getFundDetail = async (req, res) => {
     return res.status(400).json({ message: 'Invalid scheme code' });
   }
 
-  // Check cache first
+
   const cached = navCache.get(schemeCode);
   if (cached) {
     return res.status(200).json({ ...cached, fromCache: true });
@@ -50,9 +44,8 @@ const getFundDetail = async (req, res) => {
       return res.status(404).json({ message: 'Fund not found or no NAV data' });
     }
 
-    // Store in cache
-    navCache.set(schemeCode, response.data);
 
+    navCache.set(schemeCode, response.data);
     res.status(200).json(response.data);
   } catch (error) {
     if (error.response && error.response.status === 404) {

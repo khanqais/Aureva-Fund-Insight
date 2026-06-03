@@ -64,17 +64,4 @@ const login = async (req, res) => {
   }
 };
 
-// @desc    Get current logged-in user
-// @route   GET /api/auth/me
-// @access  Private
-const getMe = async (req, res) => {
-  res.status(200).json({
-    _id: req.user._id,
-    name: req.user.name,
-    email: req.user.email,
-    role: req.user.role,
-    profilePicture: req.user.profilePicture,
-  });
-};
-
-module.exports = { register, login, getMe };
+module.exports = { register, login };

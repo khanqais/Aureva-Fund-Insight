@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 
-// Returns a debounced version of the value, delayed by `delay` ms
 const useDebounce = (value, delay = 400) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
@@ -9,7 +8,6 @@ const useDebounce = (value, delay = 400) => {
       setDebouncedValue(value);
     }, delay);
 
-    // Cleanup: clear the timer if value changes before delay
     return () => clearTimeout(timer);
   }, [value, delay]);
 
