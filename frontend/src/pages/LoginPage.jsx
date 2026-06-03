@@ -79,7 +79,7 @@ const LoginPage = () => {
               name="email"
               value={form.email}
               onChange={handleChange}
-              placeholder="you@example.com"
+              placeholder=""
               required
             />
           </div>
@@ -92,7 +92,7 @@ const LoginPage = () => {
               name="password"
               value={form.password}
               onChange={handleChange}
-              placeholder="••••••"
+              placeholder=""
               required
             />
           </div>

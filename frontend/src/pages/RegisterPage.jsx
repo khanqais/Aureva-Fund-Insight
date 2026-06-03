@@ -74,7 +74,7 @@ const RegisterPage = () => {
               name="name"
               value={form.name}
               onChange={handleChange}
-              placeholder="John Doe"
+              placeholder=""
               required
             />
           </div>
@@ -87,7 +87,7 @@ const RegisterPage = () => {
               name="email"
               value={form.email}
               onChange={handleChange}
-              placeholder="you@example.com"
+              placeholder=""
               required
             />
           </div>
@@ -100,7 +100,7 @@ const RegisterPage = () => {
               name="password"
               value={form.password}
               onChange={handleChange}
-              placeholder="Min 6 characters"
+              placeholder=""
               required
               minLength={6}
             />
