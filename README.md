@@ -1,6 +1,6 @@
 # Aureva Fund Insight Tracker
 
-A full-stack MERN application to search Indian Mutual Funds, manage a personal watchlist, and view NAV performance charts — powered by [MFapi.in](https://www.mfapi.in/).
+A full-stack MERN application to search Indian Mutual Funds, manage a personal watchlist, and view NAV performance charts
 
 ---
 
