@@ -8,7 +8,9 @@ const passport = require('./config/passport');
 const connectDB = require('./config/db');
 
 
-connectDB();
+connectDB().catch((error) => {
+  console.error('MongoDB connection error during startup:', error.message);
+});
 
 const app = express();
 
