@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { body } = require('express-validator');
 const passport = require('../config/passport');
-const { register, login } = require('../controllers/authController');
+const { register, login, getMe } = require('../controllers/authController');
 const { protect } = require('../middleware/authMiddleware');
 
 const registerValidation = [
@@ -20,6 +20,8 @@ const loginValidation = [
 
 router.post('/register', registerValidation, register);
 router.post('/login', loginValidation, login);
+
+router.get('/me', protect, getMe);
 
 
 router.get(
