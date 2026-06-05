@@ -1,9 +1,7 @@
 const { validationResult } = require('express-validator');
 const User = require('../models/User');
 
-// @desc    Register a new user
-// @route   POST /api/auth/register
-// @access  Public
+
 const register = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -33,9 +31,7 @@ const register = async (req, res) => {
   }
 };
 
-// @desc    Login user
-// @route   POST /api/auth/login
-// @access  Public
+
 const login = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -64,9 +60,7 @@ const login = async (req, res) => {
   }
 };
 
-// @desc    Get current user
-// @route   GET /api/auth/me
-// @access  Private
+
 const getMe = async (req, res) => {
   res.status(200).json(req.user);
 };
